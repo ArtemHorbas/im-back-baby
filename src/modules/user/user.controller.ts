@@ -1,13 +1,16 @@
-import { Controller } from '@nestjs/common'
+import { Body, Controller, Patch } from '@nestjs/common'
 import { UserService } from './user.service'
+import { UpdateUserDTO } from './dto/update-user.dto'
+import { Auth } from '../../utils/decorators/auth.decorator'
+import { User } from '../../utils/decorators/user.decorator'
 
 @Controller('user')
 export class UserController {
-	constructor(private readonly userService: UserService) {
-	}
+	constructor(private readonly userService: UserService) {}
 
-	// @Post('create-user')
-	// createUser(@Body() dto: CreateUserDTO) {
-	// 	return this.userService.createUser(dto)
-	// }
+	@Auth()
+	@Patch()
+	updateUser(@Body() dto: UpdateUserDTO, @User() user) {
+		return user
+	}
 }
