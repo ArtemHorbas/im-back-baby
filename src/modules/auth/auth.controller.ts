@@ -1,10 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { CreateUserDTO } from '../user/dto/create-user.dto'
-import { UserLoginDTO } from './dto'
+import { UserLoginDTO } from './dto/user-login.dto'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AuthUserResponse } from './response'
-import { Auth } from '../../utils/decorators/auth.decorator'
+import { AuthUserResponse } from './response/auth.response'
 
 @Controller('auth')
 export class AuthController {
@@ -22,11 +21,5 @@ export class AuthController {
 	@Post('login')
 	login(@Body() dto: UserLoginDTO): Promise<AuthUserResponse> {
 		return this.authService.loginUser(dto)
-	}
-
-	@Auth()
-	@Post('test')
-	test() {
-		return true
 	}
 }

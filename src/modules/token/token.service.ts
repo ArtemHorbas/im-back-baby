@@ -9,10 +9,9 @@ export class TokenService {
 		private readonly configService: ConfigService
 	) {}
 
-	async generateJwtToken(user) {
+	async generateJwtToken(userId: number) {
 		const payload = {
-			firstName: user.firstName,
-			email: user.email
+			id: userId
 		}
 		return this.jwtService.signAsync(payload, {
 			secret: this.configService.get('secret_jwt'),

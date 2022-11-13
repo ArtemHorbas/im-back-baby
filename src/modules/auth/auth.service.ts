@@ -3,9 +3,9 @@ import { UserService } from '../user/user.service'
 import { CreateUserDTO } from '../user/dto/create-user.dto'
 import { AppError } from '../../utils/constants/error'
 import * as bcrypt from 'bcrypt'
-import { UserLoginDTO } from './dto'
+import { UserLoginDTO } from './dto/user-login.dto'
 import { TokenService } from '../token/token.service'
-import { AuthUserResponse } from './response'
+import { AuthUserResponse } from './response/auth.response'
 
 @Injectable()
 export class AuthService {
@@ -26,7 +26,7 @@ export class AuthService {
 
 		return {
 			user,
-			token: await this.tokenService.generateJwtToken(user)
+			token: await this.tokenService.generateJwtToken(user.id)
 		}
 	}
 
@@ -42,7 +42,7 @@ export class AuthService {
 
 		return {
 			user: await this.userService.publicUser(dto.email),
-			token: await this.tokenService.generateJwtToken(existUser)
+			token: await this.tokenService.generateJwtToken(existUser.id)
 		}
 	}
 
